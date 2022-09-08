@@ -5,7 +5,7 @@ export class ServerRouter {
 	constructor(private app: ServerAplication) {}
 
 	getServer() {
-		this.app.init().get('/', (req: Request, res: Response) => {
+		return this.app.init().get('/', (req: Request, res: Response) => {
 			res.send({ message: 'Hello World' });
 		});
 	}

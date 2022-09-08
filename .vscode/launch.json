@@ -15,14 +15,19 @@
 							"<node_internals>/**"
 					],
 					"type": "pwa-node"
-					
+
 			},
 			{
-				"type": "node",
-				"request": "attach",
-				"name": "Attach",
-				"port": 9229
-			}
-			
+			"name": "Debug Jest Tests",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": [
+        "--inspect-brk",
+        "${workspaceRoot}/node_modules/.bin/jest",
+        "--runInBand"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+		}
 	]
 }

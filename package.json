@@ -4,7 +4,7 @@
   "description": "Jobber is a bot where you can send your jobs needs and it'll look it for you :)",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles",
+    "test": "jest --runInBand --detectOpenHandles",
     "start": "npx ts-node --transpile-only src/server.ts"
   },
   "keywords": [],
