@@ -5,6 +5,7 @@
 	"version": "0.2.0",
 	"configurations": [
 
+
 			{
 					"name": "Attach by Process ID",
 					"processId": "${command:PickProcess}",
@@ -14,6 +15,14 @@
 							"<node_internals>/**"
 					],
 					"type": "pwa-node"
+					
 			},
+			{
+				"type": "node",
+				"request": "attach",
+				"name": "Attach",
+				"port": 9229
+			}
+			
 	]
 }

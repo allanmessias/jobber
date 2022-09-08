@@ -1,17 +1,20 @@
 import request from 'supertest';
-import { ServerAplication } from '../application/ServerApplication';
+import { ServerAplication } from '../infra/Server/ServerApplication';
+import { ServerRouter } from '../routes/Server/ServerRouter';
 
-let server: ServerAplication;
+const server = new ServerAplication();
+const router = new ServerRouter(server);
 
-beforeAll(async () => {
-	server = new ServerAplication();
+beforeAll(() => {
 	server.start();
 });
 
 describe('get server', () => {
-	it('Should return 200', async () => {
-		request(server).get('/');
-		const response = request(server).get('/');
-		expect((await response).status).toBe(200);
+	it('Should return 200 and Hello World', async () => {
+		const sut = router.getServer();
+		const res = await request(sut).get('/');
+
+		expect(res.statusCode).toEqual(200);
+		expect(res.body).toHaveProperty('message');
 	});
 });
