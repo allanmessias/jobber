@@ -5,8 +5,8 @@ import { ServerRouter } from '../routes/Server/ServerRouter';
 const server = new ServerAplication();
 const router = new ServerRouter(server);
 
-beforeAll(async () => {
-	await server.start();
+beforeAll(() => {
+	jest.spyOn(server, 'start');
 });
 
 describe('get server', () => {
