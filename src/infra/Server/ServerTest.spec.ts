@@ -1,6 +1,6 @@
 import request from 'supertest';
-import { ServerAplication } from '../infra/Server/ServerApplication';
-import { ServerRouter } from '../routes/Server/ServerRouter';
+import { ServerRouter } from '../../routes/Server/ServerRouter';
+import { ServerAplication } from './ServerApplication';
 
 const server = new ServerAplication();
 const router = new ServerRouter(server);

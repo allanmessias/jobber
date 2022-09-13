@@ -9,8 +9,9 @@
  * 4. Bot realiza busca e, ao encontrar, responde a desenvolvedor se ele deseja salvar no sql ou não
  */
 
-import { IWinstonLogger } from '../infra/Log/IWinstonLogger';
-import { WinstonLogger } from '../infra/Log/WinstonLogger';
+import { IWinstonLogger } from '../../infra/Log/IWinstonLogger';
+import { WinstonLogger } from '../../infra/Log/WinstonLogger';
+import { DeveloperSpy } from '../Developer/Developer.spec';
 
 class JobberBotSpy {
 	constructor(
@@ -20,7 +21,7 @@ class JobberBotSpy {
 
 	greets() {
 		this.logger.logInfo('Saudando developer');
-		return `Olá ${this.developer.name}, ${this.greetingsByHour()}`;
+		return `Olá ${this.developer.getDeveloperName()}, ${this.greetingsByHour()}`;
 	}
 
 	greetingsByHour(): string {
@@ -42,14 +43,6 @@ class JobberBotSpy {
 	}
 }
 
-interface IDeveloper {
-	name: string;
-}
-
-class DeveloperSpy implements IDeveloper {
-	public name = 'allan';
-}
-
 type SutTypes = {
 	sut: JobberBotSpy;
 	developer: DeveloperSpy;
@@ -57,7 +50,7 @@ type SutTypes = {
 };
 
 const sutFactory = (): SutTypes => {
-	const developer = new DeveloperSpy();
+	const developer = new DeveloperSpy('Allan', 'Chat1');
 	const winstonLogger = new WinstonLogger();
 	const sut = new JobberBotSpy(developer, winstonLogger);
 	// const crawler = new CrawlerSpy(sut);
@@ -69,7 +62,7 @@ describe('JobberBot', () => {
 	it('Should greets developer with a message', () => {
 		const { developer, sut } = sutFactory();
 		expect(sut.greets()).toBe(
-			`Olá ${developer.name}, ${sut.greetingsByHour()}`,
+			`Olá ${developer.getDeveloperName()}, ${sut.greetingsByHour()}`,
 		);
 	});
 
