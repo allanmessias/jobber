@@ -9,18 +9,25 @@
  * 4. Bot realiza busca e, ao encontrar, responde a desenvolvedor se ele deseja salvar no sql ou não
  */
 
-import { IWinstonLogger } from '../../infra/Log/IWinstonLogger';
-import { WinstonLogger } from '../../infra/Log/WinstonLogger';
+import { BotApiConfig } from '../../infra/config/BotApiConfig';
 import { DeveloperSpy } from '../Developer/Developer.spec';
+import { IJobberBot } from './IJobberBot';
+import { Telegraf, Telegram } from 'telegraf';
 
-class JobberBotSpy {
+class JobberBotSpy implements IJobberBot {
 	constructor(
 		private readonly developer: IDeveloper,
-		private readonly logger: IWinstonLogger,
+		private readonly apiToken: BotApiConfig,
 	) {}
+	greetsByHour(): string | Telegram {
+		throw new Error('Method not implemented.');
+	}
+
+	getToken(): BotApiConfig {
+		return this.apiToken;
+	}
 
 	greets() {
-		this.logger.logInfo('Saudando developer');
 		return `Olá ${this.developer.getDeveloperName()}, ${this.greetingsByHour()}`;
 	}
 
@@ -46,16 +53,16 @@ class JobberBotSpy {
 type SutTypes = {
 	sut: JobberBotSpy;
 	developer: DeveloperSpy;
-	winstonLogger: WinstonLogger;
+	apiToken: BotApiConfig;
 };
 
 const sutFactory = (): SutTypes => {
 	const developer = new DeveloperSpy('Allan', 'Chat1');
-	const winstonLogger = new WinstonLogger();
-	const sut = new JobberBotSpy(developer, winstonLogger);
+	const apiToken = new BotApiConfig();
+	const sut = new JobberBotSpy(developer, apiToken);
 	// const crawler = new CrawlerSpy(sut);
 
-	return { sut, developer, winstonLogger };
+	return { sut, developer, apiToken };
 };
 
 describe('JobberBot', () => {
@@ -76,8 +83,10 @@ describe('JobberBot', () => {
 		expect(sut.tellToWait()).toBe('Ok, estou procurando pra você');
 	});
 
-	// it('Should search for jobs on the internet or whatever', async () => {
-	// 	const { crawler } = sutFactory();
-	// 	expect(crawler.searchForJobs()).;
-	// });
+	it('Should return a instance of telegraf', async () => {
+		const { apiToken } = sutFactory();
+		const telegraf = apiToken.init();
+
+		expect(telegraf).toBeInstanceOf(Telegraf);
+	});
 });
