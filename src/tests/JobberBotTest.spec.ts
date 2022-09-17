@@ -9,6 +9,7 @@
  * 4. Bot realiza busca e, ao encontrar, responde a desenvolvedor se ele deseja salvar no sql ou não
  */
 
+<<<<<<< Updated upstream:src/tests/JobberBotTest.spec.ts
 import { IWinstonLogger } from '../infra/Log/IWinstonLogger';
 import { WinstonLogger } from '../infra/Log/WinstonLogger';
 
@@ -21,6 +22,18 @@ class JobberBotSpy {
 	greets() {
 		this.logger.logInfo('Saudando developer');
 		return `Olá ${this.developer.name}, ${this.greetingsByHour()}`;
+=======
+import { DeveloperSpy } from '../Developer/Developer.spec';
+import { BotApiConfig } from '../../infra/config/BotApiConfig';
+
+class JobberBotSpy {
+	constructor(private readonly telegramBot: BotApiConfig) {
+		this.telegramBot = telegramBot;
+	}
+
+	greets(): any {
+		return this.telegramBot.initializeTelegramBot();
+>>>>>>> Stashed changes:src/entities/JobberBot/JobberBotTest.spec.ts
 	}
 
 	greetingsByHour(): string {
@@ -53,6 +66,7 @@ class DeveloperSpy implements IDeveloper {
 type SutTypes = {
 	sut: JobberBotSpy;
 	developer: DeveloperSpy;
+<<<<<<< Updated upstream:src/tests/JobberBotTest.spec.ts
 	winstonLogger: WinstonLogger;
 };
 
@@ -63,6 +77,21 @@ const sutFactory = (): SutTypes => {
 	// const crawler = new CrawlerSpy(sut);
 
 	return { sut, developer, winstonLogger };
+=======
+};
+
+const sutFactory = (): SutTypes => {
+	const botConfig = new BotApiConfig();
+	const developer = new DeveloperSpy({
+		firstName: 'allan',
+		lastName: 'messias',
+		userName: 'allanmessias',
+	});
+	const sut = new JobberBotSpy(botConfig);
+	// const crawler = new CrawlerSpy(sut);
+
+	return { sut, developer };
+>>>>>>> Stashed changes:src/entities/JobberBot/JobberBotTest.spec.ts
 };
 
 describe('JobberBot', () => {
@@ -82,9 +111,12 @@ describe('JobberBot', () => {
 		const { sut } = sutFactory();
 		expect(sut.tellToWait()).toBe('Ok, estou procurando pra você');
 	});
+<<<<<<< Updated upstream:src/tests/JobberBotTest.spec.ts
 
 	// it('Should search for jobs on the internet or whatever', async () => {
 	// 	const { crawler } = sutFactory();
 	// 	expect(crawler.searchForJobs()).;
 	// });
+=======
+>>>>>>> Stashed changes:src/entities/JobberBot/JobberBotTest.spec.ts
 });
