@@ -1,16 +1,17 @@
-export class Developer implements IDeveloper {
-	private id!: string;
+export interface IDeveloperProps {
+	firstName: string;
+	lastName: string;
+	userName: string;
+}
 
-	constructor(private readonly name: string, private readonly chat_id: string) {
-		this.name = name;
-		this.chat_id = chat_id;
+export class Developer {
+	private id!: number;
+
+	constructor(private developerProps: IDeveloperProps) {
+		this.developerProps = developerProps;
 	}
 
 	getDeveloperName() {
-		return this.name;
-	}
-
-	getChatId() {
-		return this.chat_id;
+		return this.developerProps.firstName + ' ' + this.developerProps.lastName;
 	}
 }
