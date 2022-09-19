@@ -10,8 +10,4 @@ export class Developer {
 	constructor(private developerProps: IDeveloperProps) {
 		this.developerProps = developerProps;
 	}
-
-	getDeveloperName() {
-		return this.developerProps.firstName + ' ' + this.developerProps.lastName;
-	}
 }
