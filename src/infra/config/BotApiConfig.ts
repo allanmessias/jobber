@@ -6,7 +6,6 @@
 
 import dotenv from 'dotenv';
 import { Telegraf, Telegram } from 'telegraf';
-dotenv.config();
 
 dotenv.config();
 
