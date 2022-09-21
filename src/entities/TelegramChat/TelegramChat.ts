@@ -4,11 +4,14 @@
  */
 
 export class TelegramChat {
-	constructor(private readonly chatID: string | number) {
-		this.chatID = chatID;
-	}
+	private chatID!: string;
 
 	getChatId() {
+		return this.chatID;
+	}
+
+	setChatId(chatID: string) {
+		this.chatID = chatID;
 		return this.chatID;
 	}
 }

@@ -1,7 +1,7 @@
 import { Response, Request } from 'express';
 import { TelegramChat } from '../../../entities/TelegramChat/TelegramChat';
 
-export class GetChatIdController {
+export class GetChatIdControllerSpy {
 	constructor(private telegramChat: TelegramChat) {
 		this.telegramChat = telegramChat;
 	}

@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import { Router } from 'express';
+import { chatIdController } from './application/useCases/get-chat-id';
 
 const router = Router();
 
 router.post('/', (req: Request, res: Response) => {
-	console.log(req.body);
-	res.send(req.body);
+	return chatIdController.handle(req, res);
 });
 
 export { router };
