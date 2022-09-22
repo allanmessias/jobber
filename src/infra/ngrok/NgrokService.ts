@@ -1,17 +1,13 @@
-import ngrok from 'ngrok';
-
-export interface Token {
-	AuthToken: string;
-}
+import ngrok, { Ngrok, NgrokClient } from 'ngrok';
 
 export class NgrokService {
-	private api = ngrok.getApi();
+	private api: NgrokClient | null = ngrok.getApi();
 
-	constructor(private readonly authToken: Token) {
+	constructor(private readonly authToken: string) {
 		this.authToken = authToken;
 	}
 
-	async startTunnel(port: number) {
+	async startTunnel(port: number): Promise<string | undefined> {
 		try {
 			return await ngrok.connect(port);
 		} catch (error) {
@@ -19,5 +15,8 @@ export class NgrokService {
 		}
 	}
 
-	async getTunnel() {}
+	async getTunnel(): Promise<Ngrok.TunnelsResponse | undefined> {
+		const tunnel = await this.api?.listTunnels();
+		return tunnel;
+	}
 }
