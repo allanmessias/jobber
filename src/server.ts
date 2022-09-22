@@ -1,5 +1,6 @@
 import { app } from './app';
 import dotenv from 'dotenv';
-dotenv.config();
+import { config } from './infra/utils/configenv';
 
-app.listen(process.env.PORT);
+app.listen(config.PORT);
+console.log(`Servidor rodando na porta: ${config.PORT}`);
