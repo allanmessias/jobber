@@ -5,6 +5,7 @@
 	"version": "0.2.0",
 	"configurations": [
 
+
 			{
 					"name": "Attach by Process ID",
 					"processId": "${command:PickProcess}",
@@ -14,6 +15,35 @@
 							"<node_internals>/**"
 					],
 					"type": "pwa-node"
+
 			},
+			{
+				"name": "Debug Jest Tests",
+				"type": "node",
+				"request": "launch",
+				"runtimeArgs": [
+				  "--inspect-brk",
+				  "${workspaceRoot}/node_modules/jest/bin/jest.js",
+				  "--runInBand"
+				],
+				"console": "integratedTerminal",
+				"internalConsoleOptions": "neverOpen"
+			 },
+
+			 // Para linux
+			//  {
+			// 	"name": "Debug Jest Tests",
+			// 	"type": "node",
+			// 	"request": "launch",
+			// 	"runtimeArgs": [
+			// 	  "--inspect-brk",
+			// 	  "${workspaceRoot}/node_modules/.bin/jest",
+			// 	  "--runInBand"
+			// 	],
+			// 	"console": "integratedTerminal",
+			// 	"internalConsoleOptions": "neverOpen"
+			//   }
+
+
 	]
 }

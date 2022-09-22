@@ -3,7 +3,7 @@
 		"javascript": "node",
 		"typescript": "npx ts-node --files --transpile-only",
 
-
-	}
-
+	}, 	
 }
+
+
