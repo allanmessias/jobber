@@ -2,10 +2,15 @@ import { Telegram, Telegraf } from 'telegraf';
 import dotenv from 'dotenv';
 import { config } from '../utils/configenv';
 import { BotApiConfig } from './BotApiConfig';
+import { WebhookService } from '../ngrok/WebhookService';
 dotenv.config();
 
 export class BotApiConfigSpy {
 	public BOT_TOKEN: string | undefined = config.BOT_TOKEN;
+
+	constructor(private webhook: WebhookService) {
+		this.webhook = webhook;
+	}
 
 	initializeTelegramBot(): Telegram | undefined {
 		if (this.BOT_TOKEN) {
@@ -23,9 +28,11 @@ export class BotApiConfigSpy {
 }
 
 const makeSut = () => {
-	const sut = new BotApiConfigSpy();
+	const webhookService = new WebhookService(config.TUNNEL);
+	const sut = new BotApiConfigSpy(webhookService);
 
 	return {
+		webhookService,
 		sut,
 	};
 };
@@ -42,5 +49,20 @@ describe('BotApiConfig', () => {
 		expect(() => {
 			sut.initializeTelegramBot();
 		}).toThrow('It was not possible to connect with the bot, please try later');
+	});
+
+	it('Should start if webhook is provided', () => {
+		const { sut, webhookService } = makeSut();
+		const bot = sut.getTelegraf();
+		const domain =
+			'https://04bd-2804-d4b-9a89-da00-d5d4-f169-4367-4351.sa.ngrok.io';
+		const port: number | undefined = config.PORT;
+		if (port) {
+			expect(
+				bot?.launch({
+					webhook: { domain: webhookService.getTunnel(), port: port },
+				}),
+			).resolves;
+		}
 	});
 });
