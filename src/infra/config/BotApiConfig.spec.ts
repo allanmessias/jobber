@@ -1,12 +1,12 @@
 import { Telegram, Telegraf } from 'telegraf';
 import dotenv from 'dotenv';
-import { config } from '../utils/configenv';
+import { envConfig } from '../utils/configenv';
 import { BotApiConfig } from './BotApiConfig';
-import { WebhookService } from '../ngrok/WebhookService';
+import { WebhookService } from '../ngrok/WebhookService.spec';
 dotenv.config();
 
 export class BotApiConfigSpy {
-	public BOT_TOKEN: string | undefined = config.BOT_TOKEN;
+	public BOT_TOKEN: string | undefined = envConfig.BOT_TOKEN;
 
 	constructor(private webhook: WebhookService) {
 		this.webhook = webhook;
@@ -28,7 +28,7 @@ export class BotApiConfigSpy {
 }
 
 const makeSut = () => {
-	const webhookService = new WebhookService(config.TUNNEL);
+	const webhookService = new WebhookService(envConfig.TUNNEL);
 	const sut = new BotApiConfigSpy(webhookService);
 
 	return {
@@ -56,7 +56,7 @@ describe('BotApiConfig', () => {
 		const bot = sut.getTelegraf();
 		const domain =
 			'https://04bd-2804-d4b-9a89-da00-d5d4-f169-4367-4351.sa.ngrok.io';
-		const port: number | undefined = config.PORT;
+		const port: number | undefined = envConfig.PORT;
 		if (port) {
 			expect(
 				bot?.launch({
