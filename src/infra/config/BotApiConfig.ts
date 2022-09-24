@@ -27,12 +27,7 @@ export class BotApiConfig {
 		if (this.BOT_TOKEN) return new Telegraf(this.BOT_TOKEN);
 	}
 
-	launchWebhook(public_url: string, port: number) {
-		return this.getTelegraf()?.launch({
-			webhook: {
-				domain: public_url,
-				port: port,
-			},
-		});
+	launchBot() {
+		return this.getTelegraf()?.launch();
 	}
 }
