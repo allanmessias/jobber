@@ -26,6 +26,7 @@ export class WebhookService {
 		return tunnelUrl?.public_url;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	async getTunnelName(): Promise<any> {
 		const tunnels = await this.getTunnels();
 		return tunnels?.forEach((tunnel) => tunnel.name);

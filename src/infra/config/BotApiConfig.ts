@@ -6,13 +6,14 @@
 
 import dotenv from 'dotenv';
 import { Telegraf, Telegram } from 'telegraf';
+import { envConfig } from '../utils/configenv';
 
 dotenv.config();
 
 export class BotApiConfig {
-	private readonly BOT_TOKEN: string | undefined = process.env.BOT_TOKEN;
+	private readonly BOT_TOKEN: string | undefined = envConfig.BOT_TOKEN;
 
-	initializeTelegramBot(): Telegram | undefined {
+	getTelegramBot(): Telegram | undefined {
 		if (this.BOT_TOKEN) {
 			const telegraf = new Telegraf(this.BOT_TOKEN);
 			return telegraf.telegram;
@@ -20,5 +21,18 @@ export class BotApiConfig {
 		throw new Error(
 			'It was not possible to connect with the bot, please try later',
 		);
+	}
+
+	getTelegraf(): Telegraf | undefined {
+		if (this.BOT_TOKEN) return new Telegraf(this.BOT_TOKEN);
+	}
+
+	launchWebhook(public_url: string, port: number) {
+		return this.getTelegraf()?.launch({
+			webhook: {
+				domain: public_url,
+				port: port,
+			},
+		});
 	}
 }
