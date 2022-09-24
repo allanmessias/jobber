@@ -1,7 +1,6 @@
 import ngrok, { NgrokClient, Ngrok } from 'ngrok';
-import { envConfig } from '../utils/configenv';
 
-export class WebhookServiceSpy {
+export class WebhookService {
 	private api: NgrokClient | null = ngrok.getApi();
 
 	constructor(private readonly authToken: string | undefined) {
