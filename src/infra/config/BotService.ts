@@ -10,7 +10,7 @@ import { envConfig } from '../utils/configenv';
 
 dotenv.config();
 
-export class BotApiConfig {
+export class BotService {
 	private readonly BOT_TOKEN: string | undefined = envConfig.BOT_TOKEN;
 
 	getTelegramBot(): Telegram | undefined {
@@ -27,7 +27,7 @@ export class BotApiConfig {
 		if (this.BOT_TOKEN) return new Telegraf(this.BOT_TOKEN);
 	}
 
-	launchBot() {
-		return this.getTelegraf()?.launch();
+	async launchBot(): Promise<void> {
+		return await this.getTelegraf()?.launch();
 	}
 }
