@@ -23,11 +23,7 @@ export class BotService {
 		);
 	}
 
-	getTelegraf(): Telegraf | undefined {
-		if (this.BOT_TOKEN) return new Telegraf(this.BOT_TOKEN);
-	}
-
-	async launchBot(): Promise<void> {
-		return await this.getTelegraf()?.launch();
+	getTelegraf(): Telegraf {
+		return new Telegraf(this.BOT_TOKEN as string);
 	}
 }

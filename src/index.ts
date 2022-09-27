@@ -1,11 +1,14 @@
+import { BotRepliesUseCase } from './application/useCases/JobberBot';
 import { BotService } from './infra/config/BotService';
-import { Telegraf } from 'telegraf';
-import { envConfig } from './infra/utils/configenv';
 
 const botService = new BotService();
+const telegraf = botService.getTelegraf();
+const botRepliesUseCase = new BotRepliesUseCase();
 
 async function bootstrap(): Promise<void> {
-	await botService.launchBot();
+	telegraf.start(botRepliesUseCase.handleStart());
+
+	await telegraf.launch();
 }
 
-bootstrap();
+bootstrap().catch((err) => console.log({ error: err }));
